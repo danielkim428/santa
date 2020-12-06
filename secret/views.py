@@ -83,7 +83,7 @@ def new(request):
             try:
                 date = datetime.now(tz=gettz('Asia/Kolkata'))
                 content = request.POST['content']
-                if (content == ""):
+                if not content:
                     context = {
                         "group": Group.objects.get(name=user.groups.name),
                         "user": user,
