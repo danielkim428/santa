@@ -51,10 +51,10 @@ def mortal(request):
         return HttpResponseRedirect(reverse('login'))
     try:
         user = Profile.objects.get(user=request.user)
-        angel = Profile.objects.get(mortal=request.user)
-        mortal = Profile.objects.get(user=user.mortal)
         if (Group.objects.get(name=user.groups.name).start == 0):
             return HttpResponseRedirect(reverse('index'))
+        angel = Profile.objects.get(mortal=request.user)
+        mortal = Profile.objects.get(user=user.mortal)
         context = {
             "group": Group.objects.get(name=user.groups.name),
             "user": user,
@@ -70,9 +70,9 @@ def new(request):
         return HttpResponseRedirect(reverse('login'))
     try:
         user = Profile.objects.get(user=request.user)
-        mortal = Profile.objects.get(user=user.mortal)
         if (Group.objects.get(name=user.groups.name).start == 0):
             return HttpResponseRedirect(reverse('index'))
+        mortal = Profile.objects.get(user=user.mortal)
         context = {
             "group": Group.objects.get(name=user.groups.name),
             "user": user,
