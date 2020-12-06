@@ -92,6 +92,15 @@ def new(request):
                         "message": "Please write something"
                     }
                     return render(request, "secret/new.html", context)
+                if len(content) >= 2000:
+                    context = {
+                        "group": Group.objects.get(name=user.groups.name),
+                        "user": user,
+                        "mortal": mortal,
+                        "letter": Letter.objects.filter(angel=request.user),
+                        "message": "Too much"
+                    }
+                    return render(request, "secret/new.html", context)
                 angel = request.user
                 mortal = user.mortal
                 new_letter = Letter(date=date, content=content, angel=angel, mortal=mortal)
