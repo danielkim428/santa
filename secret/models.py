@@ -12,7 +12,7 @@ class Group(models.Model):
 
 class Letter(models.Model):
     date = models.DateTimeField(null=True)
-    content = models.CharField(max_length=20000, blank=True, null=True)
+    content = models.CharField(max_length=2000, blank=True, null=True)
     angel = models.ForeignKey(User, on_delete=models.CASCADE, related_name="letter_from", blank=True, null=True)
     mortal = models.ForeignKey(User, on_delete=models.CASCADE, related_name="letter_to", blank=True, null=True)
 
