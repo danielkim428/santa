@@ -13,16 +13,17 @@ class Group(models.Model):
 class Letter(models.Model):
     date = models.DateTimeField(null=True)
     content = models.CharField(max_length=20000, blank=True, null=True)
+    angel = models.ForeignKey(User, on_delete=models.CASCADE, related_name="letter_from", blank=True, null=True)
+    mortal = models.ForeignKey(User, on_delete=models.CASCADE, related_name="letter_to", blank=True, null=True)
 
     def __str__(self):
-        return self.date.day
+        return '%s to %s' % (self.angel, self.mortal)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     description = models.CharField(max_length=2000, blank=True, null=True)
     mortal = models.OneToOneField(User, on_delete=models.CASCADE, related_name="angel_of", blank=True, null=True)
     groups = models.ForeignKey(Group, on_delete=models.CASCADE, blank=True, null=True)
-    letters = models.ManyToManyField(Letter, blank=True)
 
     def __str__(self):
      return self.user.username
