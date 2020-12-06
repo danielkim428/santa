@@ -92,7 +92,7 @@ def new(request):
                         "message": "Please write something"
                     }
                     return render(request, "secret/new.html", context)
-                if len(content) >= 2000:
+                if len(content) >= 3000:
                     context = {
                         "group": Group.objects.get(name=user.groups.name),
                         "user": user,
@@ -163,6 +163,13 @@ def account(request):
         }
         if request.method == 'POST':
             description = request.POST['description']
+            if len(description) >= 3000:
+                context = {
+                    "group": Group.objects.get(name=user.groups.name),
+                    "user": user,
+                    "message": "Too much",
+                }
+                return render(request, "secret/account.html", context)
             profile = Profile.objects.get(user=request.user)
             profile.description = description
             profile.save()
