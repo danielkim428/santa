@@ -27,13 +27,20 @@ def index(request):
     if request.user.is_authenticated:
         try:
             user = Profile.objects.get(user=request.user)
-            angel = Profile.objects.get(mortal=request.user)
-            context = {
-                "group": Group.objects.get(name=user.groups.name),
-                "user": user,
-                "angel": angel,
-            }
-            return render(request, "secret/index.html", context)
+            try:
+                angel = Profile.objects.get(mortal=request.user)
+                context = {
+                    "group": Group.objects.get(name=user.groups.name),
+                    "user": user,
+                    "angel": angel,
+                }
+                return render(request, "secret/index.html", context)
+            except:
+                context = {
+                    "group": Group.objects.get(name=user.groups.name),
+                    "user": user,
+                }
+                return render(request, "secret/index.html", context)
         except:
             return render(request, "secret/init.html")
     else:
